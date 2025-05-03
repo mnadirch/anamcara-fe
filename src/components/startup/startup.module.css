@@ -1,0 +1,373 @@
+.gifStyle {
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.animatedborderbutton {
+  position: absolute;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  left: 20%;
+  top: 33%;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  width: 200px;
+  border-radius: 25px;
+}
+
+.animatedborderbutton::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #d9ff0f;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  animation: animateborder 2s linear infinite;
+  border-radius: 25px;
+}
+
+@keyframes animateborder {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  25% {
+    clip-path: inset(0 0 100% 0);
+    /* Reveal right border */
+  }
+
+  50% {
+    clip-path: inset(0 0 0 100%);
+    /* Reveal bottom border */
+  }
+
+  75% {
+    clip-path: inset(100% 0 0 0);
+    /* Reveal left border */
+  }
+
+  100% {
+    clip-path: inset(0 100% 0 0);
+    /* Return to top-left */
+  }
+}
+.animatedborderbutton2 {
+  position: fixed;
+  left: 40%;
+  bottom: 2%;
+  padding: 10px 20px;
+  font-size: 20px;
+  color: #fff;
+  overflow: hidden;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  height: 100px;
+  width: 190px;
+  z-index: 1;
+}
+
+.bubble1 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles 2s infinite;
+  bottom: -5%;
+  left: 2%;
+}
+
+.bubble3 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles0 2s infinite;
+
+  animation-delay: 1s;
+  bottom: -5%;
+  left: 38%;
+}
+.bubble4 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles0 2s infinite;
+  bottom: -5%;
+  left: 50%;
+}
+.bubble5 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles0 2s infinite;
+
+  animation-delay: 0.5s;
+  bottom: -5%;
+  left: 78%;
+}
+.bubble6 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles2 2s infinite;
+
+  animation-delay: 1s;
+  bottom: -5%;
+  left: 90%;
+}
+.bubble7 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles3 2s infinite;
+
+  animation-delay: 0.5s;
+  top: 45%;
+  left: -5%;
+}
+.bubble8 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles3 2s infinite;
+
+  animation-delay: 1s;
+  top: 20%;
+  left: -5%;
+}
+.bubble9 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles4 2s infinite;
+  animation-delay: 0.5s;
+  top: 45%;
+  right: -5%;
+}
+.bubble10 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles4 2s infinite;
+  animation-delay: 1s;
+  top: 20%;
+  right: -5%;
+}
+.bubble11 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles5 2s infinite;
+  animation-delay: 0s;
+  top: -10%;
+  right: 30%;
+}
+.bubble12 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles5 2s infinite;
+  animation-delay: 1s;
+  top: -10%;
+  right: 45%;
+}
+.bubble13 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #d9ff0f;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatBubbles5 2s infinite;
+  animation-delay: 0.5s;
+  top: -10%;
+  right: 65%;
+}
+@keyframes floatBubbles {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(40px, -20px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120px, -40px) scale(0.1);
+    opacity: 0;
+  }
+}
+@keyframes floatBubbles2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-40px, -20px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-90px, 0px) scale(0.1);
+    opacity: 0;
+  }
+}
+@keyframes floatBubbles0 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(0px, -20px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0px, -80px) scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes floatBubbles3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(40px, 0px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(130px, 0px) scale(0.1);
+    opacity: 0;
+  }
+}
+@keyframes floatBubbles4 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-20px, 0px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-40px, 0px) scale(0.1);
+    opacity: 0;
+  }
+}
+@keyframes floatBubbles5 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(0px, 20px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0px, 65px) scale(0.1);
+    opacity: 0;
+  }
+}
+@media (max-width: 580px) {
+  .animatedborderbutton2 {
+    position: absolute;
+    top: 43%;
+    left: 15%;
+    width: 200px;
+    height: 80px;
+  }
+  .bubble1 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble2 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble3 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble4 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble5 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble6 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble7 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble8 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble9 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble10 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble11 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble12 {
+    width: 6px;
+    height: 6px;
+  }
+  .bubble13 {
+    width: 6px;
+    height: 6px;
+  }
+}

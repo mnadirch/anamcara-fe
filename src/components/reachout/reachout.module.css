@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 90vh;
+  width: 100vw; /* w-screen equivalent */
+  /* scrollbar-width: none; Hide scrollbar for Firefox */
+}
+
+.icons{
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, Edge */
+}
+
+/* lg breakpoint */
+/* @media (width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+} */
+
+@media (min-width: 1920px) {
+  /* Custom 5xl breakpoint */
+  .container {
+    flex-direction: row;
+  }
+}
+
+.content1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin-top: 10px;
+}
+
+.canvasLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  z-index: -9;
+}
+
+.underline {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    padding-bottom: 100px;
+    align-items: center;
+    overflow-y: auto;
+  }
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  
+.icons{
+  width: 30px !important;
+  height: 30px !important;
+}
+}

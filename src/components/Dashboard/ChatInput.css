@@ -1,0 +1,22 @@
+@keyframes rainbow-border {
+    0% { border-color: #00CDFF; }
+    33% { border-color: #A0FF06; }
+    66% { border-color: #FF6FFF; }
+    100% { border-color: #00CDFF; }
+  }
+  
+  @keyframes rainbow-border-reverse {
+    0% { border-color: #FF6FFF; }
+    33% { border-color: #A0FF06; }
+    66% { border-color: #00CDFF; }
+    100% { border-color: #FF6FFF; }
+  }
+  
+  .animate-rainbow {
+    animation: rainbow-border 3s infinite linear;
+  }
+  
+  .animate-rainbow-reverse {
+    animation: rainbow-border-reverse 3s infinite linear;
+  }
+  

@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Mowaq';
+    src: url('../assets/fonts/Mowaq-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Mowaq';
+    src: url('../assets/fonts/Mowaq-Regular.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+  }
+ 
