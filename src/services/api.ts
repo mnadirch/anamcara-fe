@@ -3,7 +3,7 @@ import axios from 'axios';
 import supabase from '../api/supabase/client'; // adjust path if needed
 
 //const API_URL = 'http://localhost:5000/api'; 
-const API_URL = 'anamcara-be.vercel.app'; 
+const API_URL = 'anamcara-be.vercel.app/api'; 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
