@@ -1,57 +1,40 @@
-# anamcara-ai
-# Getting Started
- 
-> [!TIP]
-> This section provides instructions on how to run, build, and manage the Anamncara-AI project locally.
- 
-### Prerequisites
- 
-Clone the repository locally.
-Before running the project, ensure that you have the following installed:
- 
-- Node.js (version 18 or higher)
-- NPM
- 
-### Installation
- 
-To install all the necessary dependencies, run:
- 
-```
+# 🧠 ANAMCARA — AI Chat Companion
+
+**Anamcara** is a lightweight, ChatGPT-style AI companion built with **React**, **Vite**, and **TypeScript**, designed for blazing-fast development and easy customization.
+
+---
+
+## 🚀 Features
+
+- ⚛️ **React + Vite**: Modern stack with Hot Module Replacement (HMR)
+- 🧠 **AI-Powered**: Chat-like interface for intelligent conversations
+- 💨 **SWC/Babel** options for Fast Refresh
+- 🧹 **ESLint Integration**: Clean, scalable code with optional type-aware linting
+- 📦 Minimal yet extendable project structure
+
+---
+
+## 📁 Tech Stack
+
+- React
+- Vite
+- TypeScript
+- ESLint
+- Optional: Supabase, OpenAI API, Tailwind CSS
+
+---
+
+## 🛠️ Getting Started
+
+```bash
+# Clone the project
+git clone https://github.com/your-username/anamcara.git
+
+# Navigate to the project directory
+cd anamcara
+
+# Install dependencies
 npm install
-```
- 
-To install a specific dependency, run:
- 
-```
-npm install [depedency name]
-```
- 
-### Running the Development Server
- 
-To start the development server, use the following command:
- 
-```
+
+# Start the development server
 npm run dev
-```
- 
-This will start the Vite development server, and you can access the application at http://localhost:**_(port specified in vite.config)_** (3004 by default).
- 
-### Building for Production
- 
-To create an optimized production build, run:
- 
-```
-npm run build
-```
- 
-This will generate a dist folder containing the compiled files, ready for deployment.
- 
-### Previewing the Production Build
- 
-After building the application, you can preview the production build locally by running:
- 
-```
-npm run preview
-```
- 
-This will start a local server to preview the production build at http://localhost:4173.
