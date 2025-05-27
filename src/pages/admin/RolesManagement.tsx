@@ -1,5 +1,7 @@
 import { Table, Avatar, Button, Dropdown, MenuProps, message } from 'antd';
 import {
+    CheckOutlined,
+    CloseOutlined,
     DeleteOutlined,
     MoreOutlined,
 } from '@ant-design/icons';
@@ -108,6 +110,7 @@ const RolesManagement = () => {
             label: (
                 <Button
                     type="text"
+                    icon={record.is_active ? <CloseOutlined /> : <CheckOutlined />}
                     className="text-yellow-300 hover:text-yellow-100"
                     onClick={() => handleToggleActive(record.id, !record.is_active)}
                 >
@@ -153,7 +156,7 @@ const RolesManagement = () => {
             title: 'Name',
             key: 'name',
             render: (_, record) => (
-                <span className="text-white capitalize">
+                <span className="text-white capitalize text-xs sm:text-sm">
                     {record.first_name} {record.last_name}
                 </span>
             ),
@@ -162,7 +165,7 @@ const RolesManagement = () => {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
-            render: (text) => <span className="text-gray-300">{text}</span>,
+            render: (text) => <span className="text-gray-300 text-xs sm:text-sm">{text}</span>,
         },
         {
             title: 'Role',
@@ -170,7 +173,7 @@ const RolesManagement = () => {
             key: 'role',
             align: 'center',
             render: (role: string) => (
-                <div className='w-full flex justify-center text-sm'>
+                <div className='w-full flex justify-center text-xs sm:text-sm'>
                     {role === 'superadmin' ? (
                         <div className='text-yellow-400 bg-yellow-400/10 px-4 text-center py-2 rounded-full italic'>Super Admin</div>
                     ) : role === 'user' ? (
@@ -186,7 +189,7 @@ const RolesManagement = () => {
             key: 'status',
             align: 'center',
             render: (_, record) => (
-                <div className='w-full flex justify-center'>
+                <div className='w-full flex justify-center text-xs sm:text-sm'>
                     {record.is_active ? (
                         <div className='text-green-400 bg-green-400/10 w-20 text-center py-2 rounded-full'>Active</div>
                     ) : (
@@ -200,7 +203,7 @@ const RolesManagement = () => {
             dataIndex: 'created_at',
             key: 'created_at',
             render: (text) => (
-                <span className="text-gray-400">{formatDate(text)}</span>
+                <span className="text-gray-400 text-xs sm:text-sm">{formatDate(text)}</span>
             ),
             align: 'center',
         },

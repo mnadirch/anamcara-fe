@@ -336,3 +336,22 @@ body {
 .animate-rainbow-reverse {
   animation: rainbow-border-reverse 3s infinite linear;
 }
+
+.ant-table-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ant-table-content::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ant-table-wrapper .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before{
+  box-shadow: inset 10px 0 8px -8px rgba(20, 20, 20, 0.94) !important;
+}
+
+.ant-table-wrapper .ant-table-ping-right:not(.ant-table-has-fix-right) .ant-table-container::after{
+  box-shadow: inset -10px 0 8px -8px rgba(20, 20, 20, 0.94) !important
+}
+

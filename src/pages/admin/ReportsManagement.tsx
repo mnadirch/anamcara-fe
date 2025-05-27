@@ -1,141 +1,117 @@
-import { Table, Avatar, Button, Dropdown, Empty } from 'antd';
+import { Table, Button, Dropdown, Empty, Switch, message } from 'antd';
 import {
     MoreOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { FaEye } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
+import { getReportedThreads } from '../../utils/reports';
+import supabase from '../../config/supabase';
+import ThreadReportsModal from '../../components/dialogs/ThreadReportsModal';
 
-interface ReportType {
-    key: string;
-    id: string;
-    title: string;
-    reporter: {
-        name: string;
-        email: string;
-        avatar_url: string;
-    };
-    reported_item: string;
-    report_type: string;
-    status: string;
-    created_at: string;
-    resolved_at: string | null;
+interface ThreadReportType {
+    key: number;
+    id: number;
+    thread_id: string;
+    thread_title: string;
+    total_reports: number;
+    status: 'active' | 'inactive';
 }
 
 const ReportsManagement = () => {
-    const [reports, setReports] = useState<ReportType[]>([]);
+    const [viewOpen, setViewOpen] = useState<boolean>(false);
+    const [selectedThread, setSelectedThread] = useState<string>("");
+    const [threads, setThreads] = useState<ThreadReportType[]>([]);
     const [loading, setLoading] = useState(false);
 
-    // This would be your actual fetch function when you have data
-    const fetchReports = async () => {
-        setLoading(true);
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setReports([]); // Empty array since no data
-        setLoading(false);
+    const toggleThreadStatus = async (record: ThreadReportType) => {
+        try {
+            setLoading(true);
+
+            const { error } = await supabase.from('threads')
+                .update({ is_active: record.status !== 'active' })
+                .eq('id', record.thread_id);
+
+            if (error) {
+                throw error;
+            }
+
+            message.success(`Thread ${record.status === 'active' ? 'inactive' : 'active'} successfully`);
+            await fetchThreadReports();
+        } catch (error) {
+            message.error(`Failed to ${record.status === 'active' ? 'inactive' : 'active'} thread`);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const columns: ColumnsType<ReportType> = [
+    const handleViewDetails = (record: ThreadReportType) => {
+        setSelectedThread(record.thread_id);
+        setViewOpen(true);
+    };
+
+    const columns: ColumnsType<ThreadReportType> = [
         {
-            title: 'Report Title',
-            dataIndex: 'title',
-            key: 'title',
-            render: (text) => <span className="text-white">{text}</span>,
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text) => <span className="text-gray-300 text-xs sm:text-sm">{Number(text) + 1}</span>,
         },
         {
-            title: 'Reporter',
-            key: 'reporter',
-            render: (_, record) => (
-                <div className="flex items-center gap-2">
-                    <Avatar src={record.reporter.avatar_url} />
-                    <div>
-                        <div className="text-white">{record.reporter.name}</div>
-                        <div className="text-gray-400 text-xs">{record.reporter.email}</div>
-                    </div>
-                </div>
-            ),
+            title: 'Thread ID',
+            dataIndex: 'thread_id',
+            key: 'thread_id',
+            render: (text) => <span className="text-white text-xs sm:text-sm">{text}</span>,
         },
         {
-            title: 'Reported Item',
-            dataIndex: 'reported_item',
-            key: 'reported_item',
-            render: (text) => <span className="text-gray-300">{text}</span>,
+            title: 'Thread Title',
+            dataIndex: 'thread_title',
+            key: 'thread_title',
+            render: (text) => <span className="text-white text-xs sm:text-sm">{text}</span>,
         },
         {
-            title: 'Type',
-            dataIndex: 'report_type',
-            key: 'report_type',
+            title: 'Total Reports',
+            dataIndex: 'total_reports',
+            key: 'total_reports',
             align: 'center',
-            render: (type: string) => (
-                <div className='w-full flex justify-center text-sm'>
-                    {type === 'spam' ? (
-                        <div className='text-red-400 bg-red-400/10 px-4 text-center py-2 rounded-full'>Spam</div>
-                    ) : type === 'inappropriate' ? (
-                        <div className='text-yellow-400 bg-yellow-400/10 px-4 py-2 text-center rounded-full'>Inappropriate</div>
-                    ) : (
-                        <div className='text-blue-400 bg-blue-400/10 px-4 py-2 text-center rounded-full'>{type}</div>
-                    )}
-                </div>
-            ),
+            render: (text) => <span className="text-yellow-400 text-xs sm:text-sm">{text}</span>,
         },
         {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
             align: 'center',
-            render: (status: string) => (
-                <div className='w-full flex justify-center'>
-                    {status === 'resolved' ? (
-                        <div className='text-green-400 bg-green-400/10 w-20 text-center py-2 rounded-full'>Resolved</div>
-                    ) : status === 'pending' ? (
-                        <div className='text-yellow-400 bg-yellow-400/10 w-20 py-2 text-center rounded-full'>Pending</div>
-                    ) : (
-                        <div className='text-red-400 bg-red-400/10 w-20 py-2 text-center rounded-full'>Rejected</div>
-                    )}
-                </div>
+            render: (status: 'active' | 'inactive', record) => (
+                <Switch
+                    checked={status === 'active'}
+                    onChange={() => toggleThreadStatus(record)}
+                    className={status === 'active' ? 'bg-[#34A853]' : 'bg-gray-500'}
+                    checkedChildren="Active"
+                    unCheckedChildren="Inactive"
+                />
             ),
-        },
-        {
-            title: 'Reported At',
-            dataIndex: 'created_at',
-            key: 'created_at',
-            render: (text) => (
-                <span className="text-gray-400">{new Date(text).toLocaleDateString()}</span>
-            ),
-            align: 'center',
         },
         {
             title: 'Actions',
             key: 'actions',
             align: 'center',
-            render: () => (
+            render: (_, record) => (
                 <Dropdown
                     menu={{
                         items: [
                             {
                                 key: 'view',
                                 label: (
-                                    <Button type="text" icon={<FaEye />} className="text-gray-300 hover:text-gray-100">
+                                    <Button
+                                        type="text"
+                                        icon={<FaEye />}
+                                        className="text-gray-300 hover:text-gray-100"
+                                        onClick={() => handleViewDetails(record)}
+                                    >
                                         View Details
                                     </Button>
                                 ),
-                            },
-                            {
-                                key: 'resolve',
-                                label: (
-                                    <Button type="text" className="text-green-300 hover:text-green-100">
-                                        Mark as Resolved
-                                    </Button>
-                                ),
-                            },
-                            {
-                                key: 'reject',
-                                label: (
-                                    <Button type="text" className="text-red-300 hover:text-red-100">
-                                        Reject Report
-                                    </Button>
-                                ),
-                            },
+                            }
                         ]
                     }}
                     placement="bottomRight"
@@ -151,38 +127,59 @@ const ReportsManagement = () => {
         },
     ];
 
+    const fetchThreadReports = async () => {
+        setLoading(true);
+        const response = await getReportedThreads();
+        if (response.success) {
+            const updatedData = response.data.map((item: any, index: number) => ({
+                key: index,
+                id: index,
+                thread_id: item.thread_id,
+                thread_title: item.title,
+                total_reports: item.total_reports,
+                status: item.is_active ? 'active' : 'inactive',
+            }));
+            setThreads(updatedData);
+            setLoading(false);
+        };
+    }
+
     useEffect(() => {
-        fetchReports();
+        fetchThreadReports();
     }, []);
 
     return (
-        <div className="w-full rounded-2xl bg-[#1b1b1b] min-h-[calc(100vh-125px)] md:p-6 p-4">
-            <h2 className="font-mowaq lg:text-3xl md:text-3xl text-xl text-white font-semibold mb-6">
-                Reports Management
-            </h2>
+        <>
+            <div className="w-full rounded-2xl bg-[#1b1b1b] min-h-[calc(100vh-125px)] md:p-6 p-4">
+                <h2 className="font-mowaq lg:text-3xl md:text-3xl text-xl text-white font-semibold mb-6">
+                    Reports Management
+                </h2>
 
-            <div className="custom-dark-table-container">
-                <Table
-                    columns={columns}
-                    dataSource={reports}
-                    loading={loading}
-                    pagination={false}
-                    locale={{
-                        emptyText: (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                description={
-                                    <span className="text-gray-400">
-                                        No reports available
-                                    </span>
-                                }
-                            />
-                        )
-                    }}
-                    className="custom-dark-table"
-                />
+                <div className="custom-dark-table-container">
+                    <Table
+                        columns={columns}
+                        dataSource={threads}
+                        loading={loading}
+                        pagination={false}
+                        locale={{
+                            emptyText: (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description={
+                                        <span className="text-gray-400">
+                                            No thread reports available
+                                        </span>
+                                    }
+                                />
+                            )
+                        }}
+                        className="custom-dark-table"
+                    />
+                </div>
             </div>
-        </div>
+
+            <ThreadReportsModal isOpen={viewOpen} setIsOpen={setViewOpen} selectedThread={selectedThread} />
+        </>
     );
 };
 

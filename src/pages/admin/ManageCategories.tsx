@@ -45,7 +45,6 @@ const ManageCategories = () => {
                     }
                 })
 
-                console.log(formattedData)
                 setCategories(formattedData);
             }
         } catch (e) {
@@ -98,7 +97,6 @@ const ManageCategories = () => {
     const handleCategoryStatus = async (record: CategoryType) => {
         try {
             setLoading(true)
-            // Toggle the value before sending
             const response = await toggleCategoryStatus(record.key, !record.is_active);
             if (response.success) {
                 toast.success(response.data.message)
@@ -144,7 +142,7 @@ const ManageCategories = () => {
             title: 'Category Name',
             dataIndex: 'category_name',
             key: 'category_name',
-            render: (text) => <span className="text-white">{text}</span>,
+            render: (text) => <span className="text-white text-xs sm:text-sm">{text}</span>,
         },
         {
             title: 'Status',

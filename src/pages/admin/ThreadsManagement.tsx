@@ -6,15 +6,15 @@ import {
     CloseOutlined
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import supabase from '../../config/supabase';
+import supabase from '../../config/supabase'; // Ensure this path is correct
 import { useEffect, useState } from 'react';
-import { Thread } from '../../types';
+import { Thread } from '../../types'; // Ensure this path and type definition are correct
 import { FaEye } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 interface ThreadType {
-    key: string;
-    id: number;
+    key: string; // This should be a unique identifier, ideally the thread's actual ID
+    id: number; // A sequential ID for display purposes
     title: string;
     author: {
         username: string;
@@ -70,7 +70,7 @@ const ThreadsManagement = () => {
             message.success(`Thread deleted successfully`);
             fetchData();
         } catch (error) {
-            message.error(`Failed to deleted thread`);
+            message.error(`Failed to delete thread`);
             console.error('Error updating thread status:', error);
         }
     };
@@ -84,6 +84,7 @@ const ThreadsManagement = () => {
                     icon={<FaEye />}
                     className={`text-gray-300 hover:text-gray-100 ${!record.is_active && 'opacity-60'}`}
                     onClick={() => {
+                        // Open in a new tab
                         window.open(`http://localhost:3000/threads/${record.key}`, '_blank');
                     }}
                 >
@@ -92,7 +93,7 @@ const ThreadsManagement = () => {
             ),
         },
         {
-            key: '1',
+            key: 'toggle_status',
             label: (
                 <Button
                     type="text"
@@ -105,11 +106,12 @@ const ThreadsManagement = () => {
             ),
         },
         {
-            key: '2',
+            key: 'delete',
             label: (
                 <Button
-                    type="text" icon={<DeleteOutlined />}
-                    className="text-gray-400 hover:text-gray-200"
+                    type="text"
+                    icon={<DeleteOutlined />}
+                    className="text-red-400 hover:text-red-200"
                     onClick={() => handleDeleteThread(record.key)}
                 >
                     Delete
@@ -125,22 +127,24 @@ const ThreadsManagement = () => {
             key: 'id',
             width: 60,
             align: 'center',
-            render: (text) => <span className="text-white md:text-sm text-xs hover:underline cursor-pointer">{text}</span>,
+            render: (text) => <span className="text-white text-xs sm:text-sm whitespace-nowrap">{text}</span>,
         },
         {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            render: (text) => <span className="text-white md:text-base text-sm capitalize">{text}</span>,
+            render: (text) => <span className="text-white text-xs md:text-sm capitalize whitespace-nowrap md:whitespace-normal">{text.slice(0, 40)}{text.length > 40 ? '...' : ''}</span>,
+            responsive: ['sm'],
         },
         {
             title: 'Author',
             dataIndex: 'author',
             key: 'author',
+            width: 150,
             render: (author) => (
-                <div className="flex items-center gap-2">
-                    <Avatar src={author.avatar_url} size="default" />
-                    <span className="text-white md:text-base text-sm capitalize">{author.username}</span>
+                <div className="flex items-center gap-2 whitespace-nowrap">
+                    <Avatar src={author.avatar_url} size="small" className='w-6 h-6' />
+                    <span className="text-white text-xs sm:text-sm capitalize overflow-hidden text-ellipsis">{author.username}</span>
                 </div>
             ),
         },
@@ -149,26 +153,29 @@ const ThreadsManagement = () => {
             dataIndex: 'published',
             key: 'published',
             align: 'center',
-            render: (text) => <span className="text-white md:text-base text-sm capitalize">{formatDate(text)}</span>,
+            width: 120,
+            render: (text) => <span className="text-white text-xs sm:text-sm capitalize whitespace-nowrap">{formatDate(text)}</span>,
         },
         {
             title: 'Category',
             dataIndex: 'category_name',
             key: 'category_name',
             align: 'center',
-            render: (name) => <span className="text-white md:text-base text-sm capitalize">{name}</span>,
+            width: 100,
+            render: (name) => <span className="text-white text-xs sm:text-sm capitalize whitespace-nowrap">{name}</span>,
         },
         {
             title: 'Status',
             dataIndex: 'is_active',
             key: 'is_active',
             align: 'center',
+            width: 100,
             render: (active) => (
-                <div className='w-full flex justify-center'>
+                <div className='w-full flex justify-center whitespace-nowrap'>
                     {active ? (
-                        <div className='text-green-400 bg-green-400/10 w-20 text-center py-2 rounded-full'>Active</div>
+                        <div className='text-green-400 bg-green-400/10 w-20 text-center py-2 rounded-full text-xs'>Active</div>
                     ) : (
-                        <div className='text-red-400 bg-red-400/10 w-20 py-2 text-center rounded-full'>Inactive</div>
+                        <div className='text-red-400 bg-red-400/10 w-20 py-2 text-center rounded-full text-xs'>Inactive</div>
                     )}
                 </div>
             ),
@@ -177,13 +184,14 @@ const ThreadsManagement = () => {
             title: 'Reactions',
             key: 'reactions',
             align: 'center',
+            width: 120,
             render: (_, record) => (
-                <div className="flex justify-center gap-4 md:text-base text-sm">
-                    <span className="text-gray-300 space-x-1.5">
-                        <span className='text-green-500 text-xl'>↑</span>{record.reactions.likes}
+                <div className="flex justify-center gap-4 text-xs sm:text-sm whitespace-nowrap">
+                    <span className="text-gray-300 space-x-1">
+                        <span className='text-green-500 text-lg'>↑</span>{record.reactions.likes}
                     </span>
-                    <span className="text-gray-300 space-x-1.5">
-                        <span className='text-red-500 text-xl'>↓</span>{record.reactions.dislikes}
+                    <span className="text-gray-300 space-x-1">
+                        <span className='text-red-500 text-lg'>↓</span>{record.reactions.dislikes}
                     </span>
                 </div>
             ),
@@ -192,6 +200,7 @@ const ThreadsManagement = () => {
             title: 'Actions',
             key: 'actions',
             align: 'center',
+            width: 80,
             render: (_, record) => (
                 <Dropdown
                     menu={{ items: getMenuItems(record) }}
@@ -200,7 +209,7 @@ const ThreadsManagement = () => {
                 >
                     <Button
                         shape="circle"
-                        icon={<MoreOutlined className='text-2xl' />}
+                        icon={<MoreOutlined className='text-xl' />}
                         className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700"
                     />
                 </Dropdown>
@@ -225,9 +234,9 @@ const ThreadsManagement = () => {
             const { data, error, status } = await supabase
                 .from('threads')
                 .select(`
-                *,
-                profiles!inner(avatar_url)
-            `)
+                    *,
+                    profiles!inner(avatar_url)
+                `)
                 .eq('is_deleted', false)
                 .order('publish_date', { ascending: true });
 
@@ -237,8 +246,8 @@ const ThreadsManagement = () => {
 
             if (data) {
                 const formatted = data.map((thread: Thread, index: number) => ({
-                    key: thread.id,
-                    id: index + 1,
+                    key: thread.id, // Use actual thread ID as key
+                    id: index + 1, // Sequential ID for display
                     title: thread.title,
                     published: thread.publish_date,
                     is_active: thread.is_active,
@@ -294,16 +303,22 @@ const ThreadsManagement = () => {
                     <Table
                         columns={columns}
                         dataSource={threads}
+                        loading={loading}
                         pagination={{
                             current: currentPage,
                             pageSize: pageSize,
                             total: totalThreads,
                             showSizeChanger: true,
+                            pageSizeOptions: ['10', '20', '50'],
                         }}
                         onChange={handleTableChange}
                         bordered={false}
+                        scroll={{ x: 768 }}
+                        
                         className="custom-dark-table"
-                    />)}
+                       
+                    />
+                )}
             </div>
         </div>
     );
