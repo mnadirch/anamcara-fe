@@ -11,7 +11,7 @@ import {
     getSession,
     getUser,
     getProfile,
-    onAuthStateChange,
+    //onAuthStateChange,
     signOut
 } from '../utils/auth';
 
@@ -73,9 +73,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: null
     });
 
-    const updateAuthData = (partial: Partial<AuthData>) => {
-        setAuthData((prev) => ({ ...prev, ...partial }));
-    };
+  //  const updateAuthData = (partial: Partial<AuthData>) => {
+  //      setAuthData((prev) => ({ ...prev, ...partial }));
+ //   };
 
     const fetchSessionData = async () => {
         setLoading(true);
