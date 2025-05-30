@@ -1,34 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { FiLogOut, FiUser } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useAuth } from '../../context/AuthProvider';
 import PrimaryButton from '../addons/PrimaryButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from "react-router-dom";
+// import { logo } from "../../../public"; // <-- Add this import
 
 const DashboardNavbar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const navbarRef = useRef<HTMLDivElement>(null);
-  const [isSticky, setIsSticky] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { accessToken, loading, logout, userData } = useAuth();
-
-  const getPageTitle = () => {
-    const path = location.pathname;
-
-    if (path.startsWith('/admin/')) {
-      const parts = path.split('/').filter(Boolean);
-      if (parts.length > 1) {
-        const routeName = parts[1];
-        return routeName
-          .charAt(0).toUpperCase() +
-          routeName.slice(1).replace(/-/g, ' ');
-      }
-    }
-
-    return 'Dashboard';
-  };
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
@@ -47,25 +30,9 @@ const DashboardNavbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (navbarRef.current) {
-        const navbarHeight = navbarRef.current.offsetHeight;
-        const shouldStick = window.scrollY > navbarHeight;
-
-        if (shouldStick !== isSticky) {
-          setIsSticky(shouldStick);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isSticky]);
-
   // Animation variants
   const dropdownVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       y: -10,
       scale: 0.95,
@@ -75,7 +42,7 @@ const DashboardNavbar = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { 
+      transition: {
         type: "spring",
         damping: 20,
         stiffness: 300
@@ -106,43 +73,57 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <div
-      ref={navbarRef}
-      className={`w-full ${isSticky ? 'fixed top-0 z-50 shadow-lg' : 'relative'} transition-all duration-300`}
+    <nav
+      className="bg-black w-full px-6 md:py-3 py-2 border-b border-[#0766FF]/30 shadow-[0px_0px_10px_#0766FF] flex items-center justify-between z-50"
     >
-      <nav className="bg-[#1b1b1b] rounded-2xl py-4 px-6 flex items-center justify-between">
-        {/* Page Title */}
-        <h1 className="text-xl font-semibold text-white">
-          {getPageTitle()}
-        </h1>
+      <div className="w-full flex items-center justify-between">
+        <Link to="/home" className="flex items-center gap-3 group">
+          {/* <img src={logo} alt="Logo" className="w-10 h-auto" /> */}
+          <span className="md:text-2xl text-xl !font-bold tracking-wide font-mowaq logo-anim">
+            ANAMCARA
+          </span>
+        </Link>
 
         {/* User Profile */}
-        <div className="relative ml-2" ref={userMenuRef}>
+        <div className="relative" ref={userMenuRef}>
           {loading ? (
-            <div className='py-2 px-5'>
-              <div className="w-7 h-7 rounded-full bg-gray-700 animate-pulse" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gray-300 animate-pulse" />
+              <div className="w-20 h-4 bg-gray-300 rounded-full animate-pulse hidden sm:block" />
             </div>
           ) : (
-            !accessToken ?
-              <PrimaryButton text={"Sign in"} onClick={() => navigate("/auth/login")} className='!py-2' />
-              : (
-                <button
-                  className="flex items-center text-sm rounded-full focus:outline-none transition-transform hover:scale-105 duration-200"
-                  onClick={toggleUserMenu}
-                >
-                  <div className="md:w-8 md:h-8 w-6 h-6 rounded-full cursor-pointer overflow-hidden bg-secondary flex items-center justify-center">
-                    {userData.avatar_url && userData.first_name ? (
-                      <img
-                        src={userData.avatar_url}
-                        alt={userData.first_name}
-                        className="!relative md:!w-8 md:!h-8 !w-6 !h-6"
-                      />
-                    ) : (
-                      <FiUser className="h-6 w-6 text-white transition-all duration-300 hover:text-gray-300" />
-                    )}
+            !accessToken ? (
+              <PrimaryButton
+                text="Sign in"
+                onClick={() => navigate("/auth/login")}
+                className="!py-2 !px-4 !rounded-2xl"
+              />
+            ) : (
+              <button
+                className="flex items-center cursor-pointer gap-3 p-3 rounded-xl transition-all duration-200 focus:outline-none"
+                onClick={toggleUserMenu}
+              >
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-[#0766FF] flex items-center justify-center">
+                  {userData.avatar_url && userData.first_name ? (
+                    <img
+                      src={userData.avatar_url}
+                      alt={userData.first_name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <FaUser className="h-4 w-4 text-white" />
+                  )}
+                </div>
+                <div className="hidden sm:block text-left font-mowaq">
+                  <div className="text-xs font-medium capitalize">
+                    {userData.first_name}{userData.last_name ? ` ${userData.last_name}` : ''}
                   </div>
-                </button>
-              )
+                  <div className="text-[10px] opacity-70">
+                    {userData.email}
+                  </div>
+                </div>
+              </button>
+            )
           )}
 
           <AnimatePresence>
@@ -152,19 +133,21 @@ const DashboardNavbar = () => {
                 animate="visible"
                 exit="exit"
                 variants={dropdownVariants}
-                className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#2a2a2a] ring-1 ring-gray-700 ring-opacity-5 z-20"
+                className="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-black ring-1 ring-[#0766FF] z-50"
               >
-                <div className="py-1" role="menu">
-                  <motion.div 
-                    className="px-4 py-3 border-b border-gray-700"
+                <div className="py-2" role="menu">
+                  <motion.div
+                    className="px-4 py-3 border-b border-gray-800 sm:hidden text-left font-mowaq"
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <p className="text-sm font-medium text-white capitalize">
+                    <div className="text-xs font-medium capitalize">
                       {userData.first_name}{userData.last_name ? ` ${userData.last_name}` : ''}
-                    </p>
-                    <p className="text-xs text-gray-400 truncate">{userData.email}</p>
+                    </div>
+                    <div className="text-[10px] opacity-70">
+                      {userData.email}
+                    </div>
                   </motion.div>
 
                   <motion.button
@@ -176,10 +159,10 @@ const DashboardNavbar = () => {
                     onClick={() => {
                       setIsUserMenuOpen(false);
                       logout();
-                    }} 
-                    className="w-full cursor-pointer flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white border-t border-gray-700"
+                    }}
+                    className="w-full flex items-center cursor-pointer px-4 py-3 text-sm text-white hover:bg-gray-800 transition-colors"
                   >
-                    <FiLogOut className="mr-3 h-5 w-5 text-gray-400" />
+                    <FaSignOutAlt className="mr-3 h-4 w-4 text-[#00DCFF]" />
                     Sign out
                   </motion.button>
                 </div>
@@ -187,8 +170,8 @@ const DashboardNavbar = () => {
             )}
           </AnimatePresence>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
 

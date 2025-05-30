@@ -24,7 +24,8 @@ const ForgotPassword = lazy(() => import("../pages/auth/ForgotPssword"));
 const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"));
 
 // admin pages
-const AdminHome = lazy(() => import("../pages/admin/AdminHome"));
+const Dashboard = lazy(() => import("../pages/admin/Dashbaord"));
+// const AdminHome = lazy(() => import("../pages/admin/AdminHome"));
 const BlogEditorPage = lazy(() => import("../pages/admin/CreateBlog"));
 const ManageCategories = lazy(() => import("../pages/admin/ManageCategories"));
 const RolesManagement = lazy(() => import("../pages/admin/RolesManagement"));
@@ -88,7 +89,9 @@ const router = createBrowserRouter([
         path: "/admin",
         element: <AdminLayout />,
         children: [
-            { path: "home", element: <AdminHome /> },
+            { path: "", element: <Dashboard /> }, // default route (/admin)
+            { path: "dashboard", element: <Dashboard /> }, // optional route (/admin/dashboard)
+            // { path: "home", element: <AdminHome /> },
             { path: "blogs", element: <BlogsManagement /> },
             { path: "blogs/blog-details/:id", element: <BlogDetails /> },
             { path: "blogs/create", element: <BlogEditorPage /> },

@@ -63,7 +63,9 @@ body {
 }
 
 @keyframes blink {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
 
@@ -347,11 +349,206 @@ body {
   box-shadow: none !important;
 }
 
-.ant-table-wrapper .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before{
+.ant-table-wrapper .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before {
   box-shadow: inset 10px 0 8px -8px rgba(20, 20, 20, 0.94) !important;
 }
 
-.ant-table-wrapper .ant-table-ping-right:not(.ant-table-has-fix-right) .ant-table-container::after{
+.ant-table-wrapper .ant-table-ping-right:not(.ant-table-has-fix-right) .ant-table-container::after {
   box-shadow: inset -10px 0 8px -8px rgba(20, 20, 20, 0.94) !important
 }
 
+.logo-anim {
+  color: var(--color-pre, #0766FF);
+  background: linear-gradient(to right, var(--color-pre, #0766FF) 0%, var(--color-post, #00DCFF) 10%, var(--color-pre, #0766FF) 20%);
+  background-size: 200%;
+  background-position: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s infinite linear;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200%;
+  }
+
+  60% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
+
+
+/* Custom Dark Dropdown Menu Styling (Alternative to overlayStyle) */
+.custom-dark-dropdown-menu .ant-dropdown-menu {
+  background-color: #1A232F !important;
+  /* Dark background for dropdown items container */
+  border-radius: 8px;
+  border: 1px solid rgba(0, 220, 255, 0.2);
+  /* Cyan border */
+  padding: 4px 0;
+  /* Adjust padding as needed */
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item,
+.custom-dark-dropdown-menu .ant-dropdown-menu-submenu-title {
+  color: #E0E0E0 !important;
+  /* Light text */
+  padding: 8px 12px !important;
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item .anticon,
+.custom-dark-dropdown-menu .ant-dropdown-menu-submenu-title .anticon {
+  margin-right: 10px;
+  /* More space for icons */
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item:hover,
+.custom-dark-dropdown-menu .ant-dropdown-menu-submenu-title:hover {
+  background-color: rgba(7, 102, 255, 0.3) !important;
+  /* Blue hover with transparency */
+  color: #FFFFFF !important;
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item-danger {
+  color: #FF7875 !important;
+  /* Ant Design's danger color */
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item-danger:hover {
+  background-color: rgba(255, 77, 79, 0.2) !important;
+  color: #FF4D4F !important;
+}
+
+.custom-dark-dropdown-menu .ant-dropdown-menu-item-divider {
+  background-color: rgba(0, 220, 255, 0.2) !important;
+  /* Cyan divider */
+  margin: 6px 0;
+}
+
+
+/* Custom Dark Pagination */
+.custom-dark-pagination .ant-pagination-item a,
+.custom-dark-pagination .ant-pagination-item-link {
+  color: #A0AEC0;
+  /* Gray-500 text */
+  background-color: transparent;
+  border-color: transparent;
+  /* No border for default items */
+}
+
+.custom-dark-pagination .ant-pagination-item:hover a,
+.custom-dark-pagination .ant-pagination-item-link:hover {
+  color: #00DCFF;
+  /* Cyan text on hover */
+  background-color: rgba(0, 220, 255, 0.1);
+  /* Slight cyan background on hover */
+}
+
+.custom-dark-pagination .ant-pagination-item-active a,
+.custom-dark-pagination .ant-pagination-item-active:hover a {
+  color: #111823;
+  /* Dark text for active */
+  background-color: #00DCFF;
+  /* Cyan background for active */
+  border-color: #00DCFF;
+  /* Cyan border for active */
+}
+
+.custom-dark-pagination .ant-pagination-item-active {
+  border-color: #00DCFF !important;
+  /* Ensure active item border is cyan */
+}
+
+.custom-dark-pagination .ant-pagination-disabled .ant-pagination-item-link {
+  color: #4A5568 !important;
+  /* Gray-600 for disabled */
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.custom-dark-pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.custom-dark-pagination .ant-pagination-next:hover .ant-pagination-item-link {
+  color: #00DCFF !important;
+}
+
+.custom-dark-pagination .ant-pagination-options .ant-select-selector {
+  background-color: #1A232F !important;
+  /* Dark background for select */
+  border-color: rgba(0, 220, 255, 0.3) !important;
+  /* Cyan border for select */
+  color: #E0E0E0 !important;
+}
+
+.custom-dark-pagination .ant-select-arrow {
+  color: #00DCFF !important;
+  /* Cyan arrow for select */
+}
+
+/* Ensure select dropdown also follows dark theme - more complex, often needs AntD theme provider or more specific overrides */
+.ant-select-dropdown.custom-dark-select-dropdown {
+  /* Add this class to Dropdown's dropdownClassName prop in Pagination if possible */
+  background-color: #1A232F !important;
+}
+
+.ant-select-dropdown.custom-dark-select-dropdown .ant-select-item {
+  color: #E0E0E0 !important;
+}
+
+.ant-select-dropdown.custom-dark-select-dropdown .ant-select-item-option-selected,
+.ant-select-dropdown.custom-dark-select-dropdown .ant-select-item-option-active {
+  background-color: rgba(7, 102, 255, 0.3) !important;
+  color: #FFFFFF !important;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes grid-move {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

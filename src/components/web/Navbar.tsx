@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logo } from "../../../public";
@@ -30,7 +31,7 @@ const Navbar: React.FC = () => {
                 </span>
             </div>
 
-            {/* Desktop Navigation */}
+            
             <div className="hidden lg:flex items-center space-x-8">
                 {navlinks.map((link, index) => (
                     <div key={index} className="relative">
